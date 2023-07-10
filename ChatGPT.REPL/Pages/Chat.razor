@@ -1,0 +1,22 @@
+﻿@page "/Chat/{sessionName}"
+@using System.Web
+@layout MainLayout
+
+<h3>@SessionNameDecoded</h3>
+
+<Virtualize Items="@Results">
+    <div class="card mb-2">
+        <div class="card-header h5">
+            <i class="oi oi-trash" onclick="@(()=>DeleteResponse(@context))"></i>
+               @($"{context.Prompt}")<br />
+            <span class="small">@($"{context.LocalTimestamp:g}")</span>
+        </div>
+        @foreach (var line in context.Lines)
+        {
+            <div class="px-1 card-body">
+                <i class="oi oi-arrow-right"></i> @line
+            </div>
+        }
+    </div>
+</Virtualize>
+

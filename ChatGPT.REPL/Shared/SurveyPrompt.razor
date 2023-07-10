@@ -1,0 +1,38 @@
+﻿<div class="alert alert-secondary mt-4">
+    <p>
+        <span class="oi oi-pencil me-2" aria-hidden="true"></span>
+        <strong>@Title</strong>
+    </p>
+
+    <ul>
+        <Virtualize Items="@Results">
+            <li>
+                <a href="#" onclick=@(async ()=>SetPrompt(@context))>🔁 @($"At {context.Timestamp:g} - {context.Prompt}")</a>
+                <div>@context.Response</div>
+            </li>
+        </Virtualize>
+    </ul>
+
+    <EditForm Model="@this" OnSubmit="@Callback">
+        <fieldset class="input-group">
+            <label for="SessionName" class="col-2 form-label">Session</label>
+            <InputText id="SessionName" @bind-Value=SessionName class="form-control w-100" />
+        </fieldset>
+        <fieldset class="input-group">
+            <label for="Prompt" class="col-2 form-label">Question</label>
+            <InputTextArea id="Prompt" @ref=ITA @bind-Value=Prompt class="form-control w-100" />
+        </fieldset>
+        <fieldset class="btn-group">
+            <button disabled="@IsTaskRunning" type="submit" class="btn btn-primary">Ask</button>
+            <button disabled="@IsTaskRunning" onclick=@(async () => SaveChat()) class="btn btn-light">Save Session</button>
+        </fieldset>
+        <nav class=@($"navbar bg-body-tertiary {StatusVisibility}")>
+            <div class="container-fluid">
+                <span class="navbar-brand mb-0 h1">@Status</span>
+            </div>
+        </nav>
+    </EditForm>
+
+</div>
+
+

@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# PH_S025: Unused Synchronous Task Result
+dotnet_diagnostic.PH_S025.severity = none

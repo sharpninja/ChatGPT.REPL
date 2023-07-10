@@ -1,0 +1,126 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFrameworks>;net7.0-windows10.0.22000.0</TargetFrameworks>
+        <!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+        <OutputType>Exe</OutputType>
+        <RootNamespace>ChatGPT.REPL</RootNamespace>
+        <UseMaui>true</UseMaui>
+        <SingleProject>true</SingleProject>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <EnableDefaultCssItems>false</EnableDefaultCssItems>
+
+        <!-- Display name -->
+        <ApplicationTitle>ChatGPT Analyzer</ApplicationTitle>
+
+        <!-- App Identifier -->
+        <ApplicationId>com.chatgpt.analyzer</ApplicationId>
+        <ApplicationIdGuid>4510217E-E9F9-4ED5-AD89-3890F9038920</ApplicationIdGuid>
+        <ApplicationGuid>$(ApplicationIdGuid)</ApplicationGuid>
+
+        <!-- Versions -->
+        <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+        <ApplicationVersion>1</ApplicationVersion>
+
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.22000.0</SupportedOSPlatformVersion>
+        <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.22000.0</TargetPlatformMinVersion>
+        <UserSecretsId>5424bc6d-c2e1-47b2-9342-45cfdbcf9d97</UserSecretsId>
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">23.0</SupportedOSPlatformVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.22621.0|AnyCPU'">
+      <ApplicationId>com.chatgpt.analyzer</ApplicationId>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.22621.0|AnyCPU'">
+      <ApplicationId>com.chatgpt.analyzer</ApplicationId>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.22000.0|AnyCPU'">
+      <ApplicationIdGuid>9496F62E-1165-4334-832F-554BBDA4E32D</ApplicationIdGuid>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.22000.0|AnyCPU'">
+      <ApplicationIdGuid>9496F62E-1165-4334-832F-554BBDA4E32D</ApplicationIdGuid>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.22000.0</TargetFrameworks>
+      <DefaultLanguage>en</DefaultLanguage>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <!-- App Icon -->
+        <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+
+        <!-- Splash Screen -->
+        <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+
+        <!-- Images -->
+        <MauiImage Include="Resources\Images\*" />
+        <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+
+        <!-- Custom Fonts -->
+        <MauiFont Include="Resources\Fonts\*" />
+
+        <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="appsettings.android.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="LocalDatabase.sqlite" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="LocalDatabase.sqlite">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\.editorconfig" Link=".editorconfig" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
+        <PackageReference Include="GPS.SimpleMVC" Version="2.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+        <PackageReference Include="OpenAI" Version="1.6.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="appsettings.android.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Using Include="ChatGPT.REPL.Data" />
+      <Using Include="ChatGPT.REPL.Shared" />
+      <Using Include="GPS.SimpleMVC" />
+      <Using Include="Microsoft.AspNetCore.Components" />
+      <Using Include="Microsoft.EntityFrameworkCore" />
+      <Using Include="Microsoft.Extensions.Logging" />
+      <Using Include="Microsoft.Extensions.Configuration" />
+      <Using Include="Microsoft.EntityFrameworkCore" />
+      <Using Include="System.ComponentModel.DataAnnotations" />
+      <Using Include="System.Runtime.Serialization" />
+      <Using Include="System.Web" />
+    </ItemGroup>
+
+    <ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionChatGPTREPLHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+
+</Project>
